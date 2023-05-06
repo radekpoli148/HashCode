@@ -1,6 +1,9 @@
 package hashcode;
 
-import java.util.Objects;
+import java.io.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 class Element
 {
@@ -37,6 +40,7 @@ public class Main {
 
     public static void main(String[] args) 
     {
+        /* poprzednia lekcja
         Element a = new Element(42);
         Element b = new Element(10);
         Element c = null;
@@ -44,7 +48,38 @@ public class Main {
         System.out.println(a.equals(b));
         
         System.out.println(a.hashCode()%32);
-        System.out.println(b.hashCode()%32);
+        System.out.println(b.hashCode()%32);*/
+        
+        long mili = 0;
+        long totalMili = 0;
+        Set<String> set = new HashSet<String>(512);
+        set = new TreeSet<String>();
+        try 
+        {
+            Scanner reader = new Scanner(new BufferedReader(new FileReader("LoremIpsum.txt")));
+            
+            while(reader.hasNext())
+            {
+                mili = System.currentTimeMillis();
+
+                set.add(reader.next());
+
+                totalMili+= (System.currentTimeMillis() - mili);
+            }
+            
+            reader.close();
+        } 
+        catch (FileNotFoundException ex) 
+        {
+            ex.printStackTrace();
+        }
+        
+        Iterator<String> iter = set.iterator();
+        while(iter.hasNext())
+            System.out.println(iter.next());
+        
+        System.out.println("Czas wykonania: "+totalMili+" ms");
+        System.out.println("wielkosc zbioru: "+set.size());
     }
     
 }
